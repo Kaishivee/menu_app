@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="order-status">
+    <h2>Статус заказа #{{ order_number }}</h2>
+    <div class="status-card">
+        <div class="status-info">
+            <h3>Ваш заказ принят!</h3>
+            <p class="delivery-time">Ожидаемое время доставки: 45 минут</p>
+            <p class="address">Адрес доставки: {{ order.user.address }}</p>
+            <p class="phone">Телефон: {{ order.user.phone }}</p>
+        </div>
+        
+        <div class="order-details">
+            <h3>Состав заказа:</h3>
+            <ul class="order-items">
+                {% for item in order.items %}
+                <li class="order-item">
+                    <span class="item-name">{{ item.dish.name }}</span>
+                    <span class="item-price">{{ item.price }} ₽</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="total">Итого: {{ order.total }} ₽</p>
+        </div>
+
+        {% if not order.delivered %}
+        <form method="POST" action="{{ url_for('confirm_delivery', order_id=order.id) }}" class="delivery-form">
+            <button type="submit" class="confirm-delivery-btn">Подтвердить получение</button>
+        </form>
+        {% else %}
+        <div class="delivered-status">
+            <p class="delivered-check">✓ Заказ доставлен</p>
+            <p class="delivery-time-stamp">Время доставки: {{ order.delivery_time.strftime('%H:%M %d.%m.%Y') }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

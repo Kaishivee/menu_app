@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="cart">
+    <h2>Корзина</h2>
+    {% if items %}
+        <div class="cart-items">
+            {% for item in items %}
+            <div class="cart-item">
+                <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.name }}">
+                <div class="item-info">
+                    <div class="item-details">
+                        <h3>{{ item.name }}</h3>
+                        <p class="item-price">{{ item.price }} ₽</p>
+                    </div>
+                    <a href="{{ url_for('remove_from_cart', dish_id=item.id) }}" class="remove-item">Удалить</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="cart-total">
+            <h3>Итого: {{ total }} ₽</h3>
+        </div>
+        <div class="order-form">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.address.label }}
+                    {{ form.address(class="form-control", placeholder="Введите адрес доставки") }}
+                </div>
+                {{ form.submit(class="submit-btn") }}
+            </form>
+        </div>
+    {% else %}
+        <p class="empty-cart">Ваша корзина пуста</p>
+        <a href="{{ url_for('menu') }}" class="return-to-menu">Вернуться в меню</a>
+    {% endif %}
+</div>
+{% endblock %}

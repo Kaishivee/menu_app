@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="order-history">
+    <h2>История заказов</h2>
+    {% if numbered_orders %}
+        {% for order_number, order in numbered_orders %}
+        <div class="order-card">
+            <div class="order-header">
+                <h3>Заказ #{{ order_number }}</h3>
+                <p class="order-date">{{ order.date.strftime('%d.%m.%Y %H:%M') }}</p>
+            </div>
+            <div class="order-content">
+                <ul class="order-items">
+                    {% for item in order.items %}
+                    <li>
+                        {{ item.dish.name }} - {{ item.price }} ₽
+                    </li>
+                    {% endfor %}
+                </ul>
+                <p class="order-total">Итого: {{ order.total }} ₽</p>
+                <p class="order-status">
+                    {% if order.delivered %}
+                    ✓ Доставлен {{ order.delivery_time.strftime('%d.%m.%Y %H:%M') }}
+                    {% else %}
+                    В процессе доставки
+                    {% endif %}
+                </p>
+                {% if not order.delivered %}
+                <a href="{{ url_for('order_status', order_id=order.id) }}" class="check-status-btn">Проверить статус</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-orders">У вас пока нет заказов</p>
+    {% endif %}
+</div>
+{% endblock %}

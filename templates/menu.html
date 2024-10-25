@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="menu">
+    {% if categories %}
+        {% for category in categories %}
+        <div class="category">
+            <h2>{{ category.name }}</h2>
+            <div class="dishes">
+                {% for dish in category.dishes %}
+                <div class="dish-card">
+                    <img src="{{ url_for('static', filename='images/' + dish.image) }}" alt="{{ dish.name }}">
+                    <div class="dish-info">
+                        <h3>{{ dish.name }}</h3>
+                        <p class="description">{{ dish.description }}</p>
+                        <p class="price">{{ dish.price }} ₽</p>
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('add_to_cart', dish_id=dish.id) }}" class="add-to-cart">Добавить в корзину</a>
+                        {% else %}
+                        <a href="{{ url_for('login') }}" class="add-to-cart">Войдите для заказа</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>К сожалению, меню пока недоступно.</p>
+    {% endif %}
+</div>
+{% endblock %}
