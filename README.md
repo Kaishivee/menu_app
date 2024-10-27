@@ -58,10 +58,6 @@ Flask-SQLAlchemy
 
 git clone https://github.com/Kaishivee/menu_app_urban.git
 
-**Перейдите в каталог проекта:**
-
-cd restaurant-website
-
 **Создайте и активируйте виртуальное окружение:**
 
 python -m venv venv
