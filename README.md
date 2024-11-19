@@ -56,7 +56,7 @@ Flask-SQLAlchemy
 
 Клонируйте репозиторий с помощью Git:
 
-git clone https://github.com/Kaishivee/menu_app_urban.git
+git clone https://github.com/Kaishivee/menu_app.git
 
 **Создайте и активируйте виртуальное окружение:**
 
